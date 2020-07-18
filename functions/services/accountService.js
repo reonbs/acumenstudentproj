@@ -13,6 +13,9 @@ class AccountService {
 
             if(!user.email)
                 return {status:"FAILED", message : "email is required"}
+            
+            if(!user.first_name || !user.last_name || !user.password || !user.dob)
+                return {status:"FAILED", message : "first_name, last_name, password, dob are required"}
 
             let salt = await bcrypt.genSalt(12);
             let hashedPassword = await bcrypt.hash(user.password, salt); 
@@ -98,7 +101,7 @@ class AccountService {
             username : validUser.username,
         }
 
-        return {status:"SUCCESS" , message :"Login Successful",data : token, user: userDetail }
+        return {status:"SUCCESS" , message :"Login Successful", data : token, user: userDetail }
 
     }
 
